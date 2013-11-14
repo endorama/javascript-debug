@@ -1,18 +1,18 @@
 /*!
- * JavaScript Debug - v0.4 - 6/22/2010
- * http://benalman.com/projects/javascript-debug-console-log/
+ * JavaScript Debug - v0.5 - 11/14/2013
  * 
- * Copyright (c) 2010 "Cowboy" Ben Alman
+ * Copyright (c) Edoardo Tenani
  * Dual licensed under the MIT and GPL licenses.
- * http://benalman.com/about/license/
+ * http://endorama.mit-license.org/
  * 
- * With lots of help from Paul Irish!
+ * Thanks to Ben Alman and Paul Irish!
+ * http://benalman.com/projects/javascript-debug-console-log/
  * http://paulirish.com/
  */
 
 // Script: JavaScript Debug: A simple wrapper for console.log
 //
-// *Version: 0.4, Last Updated: 6/22/2010*
+// *Version: 0.5, Last updated: 11/14/2013*
 // 
 // Tested with Internet Explorer 6-8, Firefox 3-3.6, Safari 3-4, Chrome 3-5, Opera 9.6-10.5
 // 
@@ -31,8 +31,7 @@
 // 
 // Information about what browsers this code has been tested in.
 // 
-// Browsers Tested - Internet Explorer 6-8, Firefox 3-3.6, Safari 3-4, Chrome
-// 3-5, Opera 9.6-10.5
+// Browsers Tested - Internet Explorer 8+, Firefox 16+, Chrome 20+
 // 
 // About: Examples
 // 
@@ -173,8 +172,26 @@ window.debug = (function(){
       //  object - (Object) Any valid JavaScript object.
       
       that[ level ] = function() {
-        var args = aps.call( arguments ),
-          log_arr = [ level ].concat( args );
+        var args = aps.call( arguments );
+
+        // get caller function and stacktrace
+        if (typeof printStackTrace !== 'function') {
+          throw "Stacktrace.js is required ( https://github.com/eriwen/javascript-stacktrace )"
+        }
+        else {
+          var stacktrace = printStackTrace();
+          stacktrace = stacktrace.split("\n");
+          stacktrace[0] = 'Stacktrace printed';
+          var caller_line = stacktrace[2];
+          var index = caller_line.indexOf("at ");
+          var clean = caller_line.slice(index+2, caller_line.length);
+          args.stacktrace = {
+            caller: clean,
+            stack: stacktrace
+          };
+        }
+        
+        var log_arr = [ level ].concat( args );
         
         logs.push( log_arr );
         exec_callback( log_arr );
