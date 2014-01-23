@@ -1,5 +1,5 @@
 /*!
- * JavaScript Debug - v0.5 - 11/14/2013
+ * JavaScript Debug - v0.6 - 11/18/2013
  * 
  * Copyright (c) Edoardo Tenani
  * Dual licensed under the MIT and GPL licenses.
@@ -12,7 +12,7 @@
 
 // Script: JavaScript Debug: A simple wrapper for console.log
 //
-// *Version: 0.5, Last updated: 11/14/2013*
+// *Version: 0.6, Last updated: 11/18/2013*
 // 
 // Tested with Internet Explorer 6-8, Firefox 3-3.6, Safari 3-4, Chrome 3-5, Opera 9.6-10.5
 // 
@@ -176,17 +176,13 @@ window.debug = (function(){
 
         // get caller function and stacktrace
         if (typeof printStackTrace !== 'function') {
-          throw "Stacktrace.js is required ( https://github.com/eriwen/javascript-stacktrace )"
+          throw "Stacktrace.js is required ( https://github.com/eriwen/javascript-stacktrace )";
         }
         else {
           var stacktrace = printStackTrace();
-          stacktrace = stacktrace.split("\n");
-          stacktrace[0] = 'Stacktrace printed';
-          var caller_line = stacktrace[2];
-          var index = caller_line.indexOf("at ");
-          var clean = caller_line.slice(index+2, caller_line.length);
+          var caller_line = stacktrace[4];
           args.stacktrace = {
-            caller: clean,
+            caller: 'Stacktrace printed at ' + caller_line.slice(caller_line.indexOf("http"), caller_line.length),
             stack: stacktrace
           };
         }
