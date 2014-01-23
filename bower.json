@@ -1,0 +1,25 @@
+{
+  "name": "endorama/javascript-debug",
+  "version": "0.0.6",
+  "homepage": "https://github.com/endorama/javascript-debug",
+  "authors": [
+    "Edoardo Tenani <edoardo.tenani@gmail.com>"
+  ],
+  "description": "A simple wrapper for console.log",
+  "main": "js-debug.js",
+  "keywords": [
+    "javascript",
+    "debug"
+  ],
+  "licenses": [ "GPL", "MIT" ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "stacktrace": "~0.5.3"
+  }
+}
